@@ -1,0 +1,13 @@
+{
+    "name": "electron-app",
+    "version": "0.1.0",
+    "main": "src/main/main.cjs",
+    "scripts": {
+        "dev": "electron .",
+        "build": "electron-builder build -c build-config.js --win"
+    },
+    "devDependencies": {
+        "electron": "35.2.1",
+        "electron-builder": "^26.0.12"
+    }
+}

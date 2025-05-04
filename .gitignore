@@ -1,0 +1,10 @@
+node_modules
+.idea
+.DS_Store
+.vscode
+dist
+release/dist/**/*
+*-lock.yaml
+
+.yarn/*
+!.yarn/releases
