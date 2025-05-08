@@ -6,7 +6,9 @@
     "scripts": {
         "dev:fe": "vite",
         "dev:electron": "electron .",
-        "build": "electron-builder build -c build-config.js --win"
+        "build:fe": "vue-tsc -b && vite build",
+        "build:win": "electron-builder build -c build-config.cjs --win",
+        "build:mac": "electron-builder build -c build-config.cjs --mac"
     },
     "dependencies": {
         "vue": "^3.5.13"

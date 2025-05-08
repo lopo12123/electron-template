@@ -12,6 +12,24 @@ const handleSelectFile = async () => {
   imageConfig.value = r as unknown as ImageConfig
 }
 
+const handleProcessImage = async () => {
+  if (!imageConfig.value) {
+    // 未选择图片
+    return;
+  }
+
+  // 请求具体的服务地址
+  try {
+    // TODO: 改成实际的处理图片的请求
+    const re = await fetch('http://localhost:5000', {
+      method: 'POST',
+      body: JSON.stringify({ image: imageConfig.value.base64 })
+    }).then(r => r.json())
+    console.log('请求结果', re)
+  } catch (err) {
+    console.log('请求失败', err)
+  }
+}
 </script>
 
 <template>
@@ -21,6 +39,7 @@ const handleSelectFile = async () => {
       <img :src="'data:image/*;base64,' + imageConfig.base64" alt="">
     </div>
     <button @click="handleSelectFile">select image</button>
+    <button @click="handleProcessImage">process image</button>
   </div>
 </template>
 
