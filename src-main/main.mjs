@@ -1,4 +1,8 @@
 import {app, BrowserWindow, ipcMain, dialog} from "electron"
+import {readFileSync} from "node:fs"
+import {join} from "node:path"
+
+const preloadScript = join(import.meta.dirname, 'preload.js')
 
 /**
  * @type {BrowserWindow}
@@ -10,8 +14,10 @@ app.whenReady().then(() => {
         width: 800,
         height: 600,
         webPreferences: {
+            webSecurity: true,
             nodeIntegration: true,
-            contextIsolation: false,
+            contextIsolation: true,
+            preload: preloadScript,
         },
     });
 
@@ -21,9 +27,17 @@ app.whenReady().then(() => {
 });
 
 
-// ipcMain.handle('xxx', async (ev) => {
-//     const r = await dialog.showOpenDialog({})
-//
-//     const buffer = fs.readFileSync(r.filePaths[0])
-//     console.log(buffer)
-// })
+ipcMain.handle('select-image', async () => {
+    const r = await dialog.showOpenDialog({})
+    if (r.canceled) return null
+
+    const filePath = r.filePaths[0]
+    if (!filePath) return null
+
+    const base64 = readFileSync(filePath, 'base64')
+
+    return {
+        filePath,
+        base64,
+    }
+})

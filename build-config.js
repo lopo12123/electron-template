@@ -5,7 +5,7 @@ module.exports = {
     appId: "com.example.app",
     productName: "应用名称ABC",
     files: [
-        "src/**/*",
+        "src-main/**/*",
         "resources/**/*"
     ],
     "win": {

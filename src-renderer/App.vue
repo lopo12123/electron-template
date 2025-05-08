@@ -1,25 +1,29 @@
 <script setup lang="ts">
+import { shallowRef } from "vue";
+
+type ImageConfig = { base64: string, filePath: string }
+
+const imageConfig = shallowRef<ImageConfig | null>(null)
+
+const handleSelectFile = async () => {
+  const r = await window.__ipc__.invoke('select-image')
+  if (!r) return
+
+  imageConfig.value = r as unknown as ImageConfig
+}
+
 </script>
 
 <template>
   <div>
-    <h1>xxx xxx</h1>
+    <div v-if="imageConfig">
+      <p>{{ imageConfig.filePath }}</p>
+      <img :src="'data:image/*;base64,' + imageConfig.base64" alt="">
+    </div>
+    <button @click="handleSelectFile">select image</button>
   </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
